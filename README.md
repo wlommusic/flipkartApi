@@ -23,3 +23,5 @@ node app.js
 
 1. `/data` for product data
 2. `/reviews` for the reviews 
+
+for dependencies check package.json
