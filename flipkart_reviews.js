@@ -7,7 +7,7 @@ const { writeFile } = require('fs');
 
 async function scrapeReviews(url) {
     // const Browser = await puppeteer.launch({headless: false});
-    const Browser = await puppeteer.launch({ headless: false, args: ['--no-sandbox', '--disable-setuid-sandbox', '--window-size=1920,1080', '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"'] });
+    const Browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox', '--window-size=1920,1080', '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"'] });
     const page = await Browser.newPage();
     await page.goto(url)
 
@@ -231,7 +231,7 @@ async function scrapeReviews(url) {
     // console.log(obj);
     Browser.close();
     const jsondata = JSON.stringify(obj,null,2);
-    writeFile('reviews.json', jsondata, (err, res) => {
+    writeFile('./results/reviews.json', jsondata,{flag:'a'}, (err, res) => {
         if (err) console.log(err);
         console.log(res);
         return;
@@ -240,12 +240,17 @@ async function scrapeReviews(url) {
 }
 
 
-
-
 //passing a list of urls
+newarr=[]
+for(let i=1;i<=5;i++){
+    let urls= `https://www.flipkart.com/poco-m3-cool-blue-64-gb/product-reviews/itmc8ec867cb0472?pid=MOBFZTCUDDCTDN3G&lid=LSTMOBFZTCUDDCTDN3GBY0LIO&marketplace=FLIPKART&page=${i}`    
+    newarr.push(urls);    
+}
+//console.log(newarr)
 
-urls = ['https://www.flipkart.com/redgear-pro-series-wireless-gamepad/product-reviews/itmehwaacnryp3je?pid=ACCEHWAA5HHM6PPG&lid=LSTACCEHWAA5HHM6PPGJECJPV&marketplace=FLIPKART']
-urls.forEach(urrl => { scrapeReviews(urrl) })
+
+newarr.forEach(urlss => { scrapeReviews(urlss)})
+
 
 
 
